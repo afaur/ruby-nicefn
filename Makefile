@@ -30,4 +30,3 @@ test_all:
 	@make test_example_after_instance
 	@make test_example_before_singleton
 	@make test_example_after_singleton
-	@make test_example_project

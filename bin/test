@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+# Require coverage reporter
+require "coverage.so"
+
+# Start coverage reporter
+Coverage.start
+
 # Capture stdout
 $stdout = StringIO.new
 
@@ -19,9 +25,11 @@ blue_start, blue_end = "\e[36m", "\e[0m"
 test_message = "Testing #{object_type_under_test}, #{example_under_test} Example"
 
 # Display what test(s) we are currently running
-STDOUT.puts "------------------------------------------------------------\n" 
-STDOUT.puts "#{blue_start} #{test_message} #{blue_end}"
-STDOUT.puts "------------------------------------------------------------\n" 
+if (!(ENV['CC_TEST_REPORTER_ID'] || false))
+  STDOUT.puts "------------------------------------------------------------\n" 
+  STDOUT.puts "#{blue_start} #{test_message} #{blue_end}"
+  STDOUT.puts "------------------------------------------------------------\n" 
+end
 
 # Require file under test from argument
 require_relative "../exa/#{ARGV[0]}/#{ARGV[1]}.rb"
