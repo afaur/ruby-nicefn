@@ -26,7 +26,7 @@ avoid extra gems.}
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files         = Dir.chdir(dir) do
-    `git ls-files -z`.split('\x0').reject { |f| f.match(%r{^(tst)/}) }
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(tst)/}) }
   end
 
   spec.bindir        = 'exe'

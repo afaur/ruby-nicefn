@@ -1,3 +1,7 @@
 source 'https://rubygems.org'
 
+# Local
 gem "nicefn", :path => "../../.."
+
+# Remote
+# gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', branch: 'gem-0.1.0'

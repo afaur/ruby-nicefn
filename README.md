@@ -6,6 +6,14 @@ gem to your project. Since the implementation files are small and this project
 has no required deps. You should also feel free to copy and paste the
 implementation directly into your project in an effort to avoid extra gems.
 
+## Install Gem
+Add line to project Gemfile:
+```rb
+...
+gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', branch: 'gem-0.1.0'
+...
+```
+
 ## Project Structure
 Running `make` will default to running the tests inside `tst` folder against the
 examples inside the `exa` folder.
