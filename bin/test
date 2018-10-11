@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+# Capture stdout
+$stdout = StringIO.new
+
+# Enable test running
+require 'test/unit'
+
+# Set the name of the object type under test
+object_type_under_test = ARGV[1] == "inst" ? "Instance" : "Singleton"
+
+# Set the name of the example under test
+example_under_test = ARGV[0] == "before" ? "Before" : "After"
+
+# Define blue color code
+blue_start, blue_end = "\e[36m", "\e[0m"
+
+# Test running message
+test_message = "Testing #{object_type_under_test}, #{example_under_test} Example"
+
+# Display what test(s) we are currently running
+STDOUT.puts "------------------------------------------------------------\n" 
+STDOUT.puts "#{blue_start} #{test_message} #{blue_end}"
+STDOUT.puts "------------------------------------------------------------\n" 
+
+# Require file under test from argument
+require_relative "../exa/#{ARGV[0]}/#{ARGV[1]}.rb"
+
+# Require tests for the example under test
+require_relative "../tst/#{ARGV[1]}.rb"
