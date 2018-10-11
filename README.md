@@ -51,7 +51,7 @@ If we use `nicefn` on this class we can eliminate 10 lines of code inside of the
 class definition. This is because `private` and `protected` are handled by
 different functions (like `defp` in `elixir`).
 
-### After Adding InstFn
+### After Adding niceFn::Inst
 ```rb
 require 'nicefn'
 
@@ -72,8 +72,8 @@ If you call 'fp' you will get a private method, and 'fs' will set a protected
 (shared) method.
 
 ### Example (Singleton Classes)
-Provided below is an example of a singleton class that is made a singleton class
-by using extend self. 
+Provided below is an example of a module that is made a singleton class by using
+extend self.
 ```rb
 module Sing
   extend self
@@ -92,7 +92,7 @@ end
 After we add 'include NiceFn::Sing' to the module we can eliminate the need to
 extend self as 'Sing' will do it for us.
 
-### After Adding SingFn
+### After Adding niceFn::Sing
 ```rb
 require 'nicefn'
 
