@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/afaur/ruby-nicefn.svg?branch=master)](https://travis-ci.org/afaur/ruby-nicefn)
+
 ## Ruby Nicefn
 Elixir and javascript have the capability of making good looking one liners, but
 what about Ruby? We can definitely make an awful looking one by adding a ';'. If
