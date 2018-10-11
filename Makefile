@@ -1,5 +1,3 @@
-.PHONY: test
-
 default: test_all
 
 test_example_before_instance:

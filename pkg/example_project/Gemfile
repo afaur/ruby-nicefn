@@ -3,5 +3,11 @@ source 'https://rubygems.org'
 # Local
 gem "nicefn", :path => "../../.."
 
-# Remote
-# gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', branch: 'gem-0.1.0'
+# Download latest nicefn from default source
+# gem 'nicefn'
+
+# Download nicefn from default source with version constraints
+# gem 'nicefn', '~> 0.1.0'
+
+# Download nicefn from git with a specific version
+# gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', tag: 'v0.1.0'
