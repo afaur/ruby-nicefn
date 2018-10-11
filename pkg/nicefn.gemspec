@@ -3,7 +3,7 @@ lib = File.join(dir, 'lib')
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require "#{lib}/nicefn.rb"
+require 'nicefn'
 
 Gem::Specification.new do |spec|
   spec.name          = 'nicefn'

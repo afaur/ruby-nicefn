@@ -7,10 +7,18 @@ has no required deps. You should also feel free to copy and paste the
 implementation directly into your project in an effort to avoid extra gems.
 
 ## Install Gem
-Add line to project Gemfile:
+You can run `bundle add nicefn --version '~> 0.1.0'`, or manually add a line
+indicating how you would like to fetch the `gem` to your `Gemfile`:
 ```rb
 ...
-gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', branch: 'gem-0.1.0'
+# Download latest nicefn from default source
+gem 'nicefn'
+
+# Download nicefn from default source with version constraints
+gem 'nicefn', '~> 0.1.0'
+
+# Download nicefn from git with a specific version
+gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', tag: 'v0.1.0'
 ...
 ```
 
@@ -19,8 +27,8 @@ Running `make` will default to running the tests inside `tst` folder against the
 examples inside the `exa` folder.
 
 ## How To Use
-Add 'extend NiceFn::Inst' to the top of classes. You can also use 'include
-NiceFn::Sing' in a `module` to make it a singleton class with `nicefn` methods.
+Add `extend Nicefn::Inst` to the top of classes. You can also use `include
+Nicefn::Sing` in a `module` to make it a singleton class with `nicefn` methods.
 
 ### Example (Regular Classes)
 Provided below is an example class with `public`, `private`, and `protected` methods:
@@ -51,12 +59,12 @@ If we use `nicefn` on this class we can eliminate 10 lines of code inside of the
 class definition. This is because `private` and `protected` are handled by
 different functions (like `defp` in `elixir`).
 
-### After Adding niceFn::Inst
+### After Adding Nicefn::Inst
 ```rb
 require 'nicefn'
 
 class Inst
-  extend NiceFn::Inst
+  extend Nicefn::Inst
   attr_writer :person
 
   fn(:test_priv)  {|greet| priv "#{greet}"}
@@ -68,12 +76,12 @@ class Inst
 end
 ```
 Calling `fn` with a function `name` and a block will give you a public method.
-If you call 'fp' you will get a private method, and 'fs' will set a protected
-(shared) method.
+If you call `fp` you will get a `private` method, and `fs` will set a
+`protected` (shared) method.
 
 ### Example (Singleton Classes)
-Provided below is an example of a module that is made a singleton class by using
-extend self.
+Provided below is an example of a `module` that is made a `singleton class` by using
+`extend self`.
 ```rb
 module Sing
   extend self
@@ -89,15 +97,15 @@ private
   end
 end
 ```
-After we add 'include NiceFn::Sing' to the module we can eliminate the need to
-extend self as 'Sing' will do it for us.
+After we add `include Nicefn::Sing` to the module we can eliminate the need to
+extend self as `Nicefn::Sing` will do it for us.
 
-### After Adding niceFn::Sing
+### After Adding Nicefn::Sing
 ```rb
 require 'nicefn'
 
 module Sing
-  include NiceFn::Sing
+  include Nicefn::Sing
   attr_writer :person
 
   fn(:test_priv) {|greet| priv greet}
@@ -105,5 +113,5 @@ module Sing
 end
 ```
 Calling `fn` with a function `name` and a block will give you a public method.
-If you call 'fp' you will get a private method. Since singletons classes can
+If you call `fp` you will get a `private` method. Since singletons classes can
 only act as one instance 'fs' is not a provided option.
