@@ -1,4 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/nicefn.svg)](https://rubygems.org/gems/nicefn)
+![](https://ruby-gem-downloads-badge.herokuapp.com/nicefn?color=brightgreen&type=total)
 [![Build Status](https://travis-ci.org/afaur/ruby-nicefn.svg?branch=master)](https://travis-ci.org/afaur/ruby-nicefn)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6e10f0a9ac5b168e8821/maintainability)](https://codeclimate.com/github/afaur/ruby-nicefn/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6e10f0a9ac5b168e8821/test_coverage)](https://codeclimate.com/github/afaur/ruby-nicefn/test_coverage)
