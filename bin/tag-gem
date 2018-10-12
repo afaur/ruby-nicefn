@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Delete gem branch if it exists locally
+git branch -D gem || true
+
+# Create a new branch named `gem`
+git checkout -b gem
+
+# Add ./pkg/ Gemfile and .gemspec to project root
+make add_root_gemfile && make add_root_gemspec
+
+# Add version information to top of .gemspec in project root
+make ver_root_gemspec
+
+# Make a commit with Gemfile and .gemspec in project root
+git add -A && git commit --amend --no-edit
+
+# Use the current commit as a version tag
+git tag -a "v$1" -f -m "v$1"
+
+# Push the created comiit tag to the remote repository
+git push origin "v$1" -f
+
+# Clean up and reset back branch
+git clean -df && git checkout .
+
+# Move back to master branch
+git checkout master
+
+# Clean up branch since the tag will store the commit
+git branch -D gem

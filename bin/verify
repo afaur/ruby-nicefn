@@ -18,18 +18,19 @@ object_type_under_test = ARGV[1] == 'inst' ? 'Instance' : 'Singleton'
 # Set the name of the example under test
 example_under_test = ARGV[0] == 'before' ? 'Before' : 'After'
 
-# Define blue color code start and color termination
-blue_code = "\e[36m"
-color_end = "\e[0m"
-
-# Test running message
-test_msg = "Testing #{object_type_under_test}, #{example_under_test} Example"
-
-# Text border
-border = ('-' * 60) + "\n"
-
-# Display what test(s) we are currently running
+# Display test information (when not reporting to codeclimate)
 unless ENV.key? 'CC_TEST_REPORTER_ID'
+  # Define blue color code start and color termination
+  blue_code = "\e[36m"
+  color_end = "\e[0m"
+
+  # Test running message
+  test_msg = "Testing #{object_type_under_test}, #{example_under_test} Example"
+
+  # Text border
+  border = ('-' * 60) + "\n"
+
+  # Show message with test information
   STDOUT.puts "#{border} #{blue_code} #{test_msg} #{color_end} \n#{border}"
 end
 

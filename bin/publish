@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Checkout a tagged release
+git checkout "v$1"
+
+# Create a gem file from gemspec
+gem build nicefn.gemspec
+
+# Push the gem file to rubygems
+gem push "nicefn-${1}.gem"
+
+# Clean up and reset back branch
+git clean -df && git checkout .
+
+# Move back to master branch
+git checkout master

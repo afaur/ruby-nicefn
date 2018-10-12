@@ -1,80 +1,85 @@
 GEM ?= nicefn
 TAG ?= 0.1.0
 
-default: test_all
+default: test_examples
 
-test_example_before_instance:
-	@bundle exec ruby ./bin/test before inst
+# Run tests on all the files in the `exa` folder
+all_test_examples:
+	@bundle exec ruby ./bin/verify before inst
+	@bundle exec ruby ./bin/verify after inst
+	@bundle exec ruby ./bin/verify before sing
+	@bundle exec ruby ./bin/verify after sing
 
-test_example_after_instance:
-	@bundle exec ruby ./bin/test after inst
-
-test_example_before_singleton:
-	@bundle exec ruby ./bin/test before sing
-
-test_example_after_singleton:
-	@bundle exec ruby ./bin/test after sing
-
-add_gemfile:
+# Add the ./pkg/ Gemfile to the project root
+add_root_gemfile:
 	@cp ./pkg/Gemfile ./
 
-rem_gemfile:
+# Remove the Gemfile in the project root
+rem_root_gemfile:
 	@rm -f Gemfile || true
 
-rem_gemfile_lock:
+# Remove the Gemfile.lock in the project root
+rem_root_gemfile_lock:
 	@rm -f Gemfile.lock || true
 
-ver_gemspec:
+rem_example_gemfile_lock:
+	@rm -f ./pkg/example_project/Gemfile.lock || true
+
+# Add version from env var to the .gemspec in project root
+ver_root_gemspec:
 	@echo "ver = '$(TAG)'" | cat - ./$(GEM).gemspec > ./__TMP
 	@mv ./__TMP ./$(GEM).gemspec
 
-add_gemspec:
-	@cp ./pkg/$(GEM).gemspec ./$(GEM).gemspec
-	@mv ./pkg/$(GEM).gemspec ./pkg/$(GEM).gemspec.bak
-	@make ver_gemspec
+# Add the .gemspec to the project root
+add_root_gemspec:
+	@cp ./pkg/$(GEM).gemspec.bak ./$(GEM).gemspec
 
-rem_gemspec:
+# Remove the .gemspec from the project root
+rem_root_gemspec:
 	@rm -f nicefn.gemspec || true
-	@mv ./pkg/$(GEM).gemspec.bak ./pkg/$(GEM).gemspec
 
 test_setup:
-	@make add_gemfile
-	@make add_gemspec
+	# Add the gemfile from ./pkg/ folder to project root
+	@make add_root_gemfile
+	# Add the .gemspec from ./pkg/ folder to project root
+	@make add_root_gemspec
+	# Uses TAG env for version info at top of .gemspec in project root
+	@make ver_root_gemspec
 
+# Remove Gemfile and .gemspec in project root and restore ./pkg/ .gemspec
 test_teardown:
-	@make rem_gemfile
-	@make rem_gemspec
+	@make rem_root_gemfile
+	@make rem_root_gemspec
 
 test_example_project:
+	# Remove Gemfile and .gemspec in project root (if they exist)
 	@make test_teardown
+	# Add the gemfile and .gemspec from ./pkg/ folder to project root
 	@make test_setup
+	# Simulate install of gem inside an example project and run it
 	@cd ./pkg/example_project && bundle install && bundle exec ruby test.rb
-	@rm -f ./pkg/example_project/Gemfile.lock || true
+	# Remove Gemfile.lock created when installing example_project deps
+	@make rem_example_gemfile_lock
+	# Remove Gemfile and .gemspec in project root and restore ./pkg/ .gemspec
 	@make test_teardown
 
-test_all:
+test_examples:
+	# Add the gemfile and .gemspec from ./pkg/ folder to project root
 	@make test_setup
+	# Install dev deps for simplecov to run correctly
 	@bundle install
-	@make test_example_before_instance
-	@make test_example_after_instance
-	@make test_example_before_singleton
-	@make test_example_after_singleton
+	# Run tests against all examples (before and after using gem)
+	@make all_test_examples
+	# Remove Gemfile and .gemspec in project root and restore ./pkg/ .gemspec
 	@make test_teardown
-	@make rem_gemfile_lock
+	# Remove project root Gemfile.lock created when installing dev deps
+	@make rem_root_gemfile_lock
 
+# Add new tag defaults to using the version stored at top of Makefile
+# Creates a tag named v$(TAG) and pushes it to the remote repository
 update_gem_tag:
-	@git branch -D gem || true
-	@git checkout -b gem
-	@make add_gemfile
-	@make add_gemspec
-	@git add -A
-	@git commit --amend --no-edit
-	@git tag -a 'v$(TAG)' -f -m 'v$(TAG)'
-	@git push origin 'v$(TAG)' -f
-	@make rem_gemfile
-	@make rem_gemspec
-	@git clean -df
-	@git checkout .
-	@git checkout master
-	@git branch -D gem
-	@git push --delete origin gem
+	@./bin/tag-gem $(TAG)
+
+# Checks out a tagged gem release and publishes it to rubygems
+publish_to_rubygems:
+	@./bin/publish $(TAG)

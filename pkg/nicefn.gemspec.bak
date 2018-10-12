@@ -28,7 +28,12 @@ avoid extra gems.)
   # The `git ls-files -z` loads the files in the RubyGem that have been
   # added into git
   spec.files         = Dir.chdir(__dir__) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(tst)/}) }
+    # Get all tracked files from git as an array
+    git_files = `git ls-files -z`.split("\x0")
+    # Remove directories & files that the gem does not use
+    git_files
+      .reject { |f| f.match(%r{^(tst|exa|bin|pkg)/}) }
+      .reject { |f| ['Makefile', '.gitignore', '.travis.yml'].include? f }
   end
 
   spec.bindir        = 'exe'
@@ -37,6 +42,6 @@ avoid extra gems.)
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'simplecov', '~> 0.16.1'
-  spec.add_development_dependency 'test-unit', '~> 3.2.8'
+  spec.add_development_dependency 'simplecov', '~> 0.16', '>= 0.16.1'
+  spec.add_development_dependency 'test-unit', '~> 3.2', '>= 3.2.8'
 end
