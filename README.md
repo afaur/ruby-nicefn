@@ -43,27 +43,30 @@ class Inst
   attr_writer :person
 
   def test_priv(greet)
-    priv "#{greet}"
+    priv greet
   end
 
   def test_share(greet, inst)
     inst.share greet
   end
 
-private
+  private
+
   def priv(greet)
     puts "#{greet} #{@person}"
   end
 
-protected
+  protected
+
   def share(greet)
     puts "#{greet} #{@person}"
   end
 end
 ```
-If we use `nicefn` on this class we can eliminate 10 lines of code inside of the
-class definition. This is because `private` and `protected` are handled by
-different functions (like `defp` in `elixir`).
+If we use `nicefn` on this class we can eliminate 12 lines of code (if we add
+spaces around private and protected like rubocop suggests) inside of the class
+definition. This is because `private` and `protected` are handled by different
+functions (like `defp` in `elixir`).
 
 ### After Adding Nicefn::Inst
 ```rb
@@ -73,12 +76,12 @@ class Inst
   extend Nicefn::Inst
   attr_writer :person
 
-  fn(:test_priv)  {|greet| priv "#{greet}"}
-  fn(:test_share) {|greet, inst| inst.share greet}
+  fn(:test_priv)  { |greet| priv greet }
+  fn(:test_share) { |greet, inst| inst.share greet }
 
-  fp(:priv)  {|greet| puts "#{greet} #{@person}"}
+  fp(:priv)  { |greet| puts "#{greet} #{@person}" }
 
-  fs(:share) {|greet| puts "#{greet} #{@person}"}
+  fs(:share) { |greet| puts "#{greet} #{@person}" }
 end
 ```
 Calling `fn` with a function `name` and a block will give you a public method.
@@ -94,7 +97,7 @@ module Sing
   attr_writer :person
 
   def test_priv(greet)
-    priv "#{greet}"
+    priv greet
   end
 
 private
@@ -114,8 +117,8 @@ module Sing
   include Nicefn::Sing
   attr_writer :person
 
-  fn(:test_priv) {|greet| priv greet}
-  fp(:priv)      {|greet| puts "#{greet} #{@person}"}
+  fn(:test_priv) { |greet| priv greet }
+  fp(:priv)      { |greet| puts "#{greet} #{@person}" }
 end
 ```
 Calling `fn` with a function `name` and a block will give you a public method.

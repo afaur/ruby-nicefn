@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Local
-gem "nicefn", :path => "../../.."
+gem 'nicefn', path: '../../..'
 
 # Download latest nicefn from default source
 # gem 'nicefn'

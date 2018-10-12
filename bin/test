@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 # Require coverage reporter
-require "coverage.so"
+require 'simplecov'
 
 # Start coverage reporter
-Coverage.start
+SimpleCov.start
 
 # Capture stdout
 $stdout = StringIO.new
@@ -13,22 +13,24 @@ $stdout = StringIO.new
 require 'test/unit'
 
 # Set the name of the object type under test
-object_type_under_test = ARGV[1] == "inst" ? "Instance" : "Singleton"
+object_type_under_test = ARGV[1] == 'inst' ? 'Instance' : 'Singleton'
 
 # Set the name of the example under test
-example_under_test = ARGV[0] == "before" ? "Before" : "After"
+example_under_test = ARGV[0] == 'before' ? 'Before' : 'After'
 
-# Define blue color code
-blue_start, blue_end = "\e[36m", "\e[0m"
+# Define blue color code start and color termination
+blue_code = "\e[36m"
+color_end = "\e[0m"
 
 # Test running message
-test_message = "Testing #{object_type_under_test}, #{example_under_test} Example"
+test_msg = "Testing #{object_type_under_test}, #{example_under_test} Example"
+
+# Text border
+border = ('-' * 60) + "\n"
 
 # Display what test(s) we are currently running
-if (!(ENV['CC_TEST_REPORTER_ID'] || false))
-  STDOUT.puts "------------------------------------------------------------\n" 
-  STDOUT.puts "#{blue_start} #{test_message} #{blue_end}"
-  STDOUT.puts "------------------------------------------------------------\n" 
+unless ENV.key? 'CC_TEST_REPORTER_ID'
+  STDOUT.puts "#{border} #{blue_code} #{test_msg} #{color_end} \n#{border}"
 end
 
 # Require file under test from argument

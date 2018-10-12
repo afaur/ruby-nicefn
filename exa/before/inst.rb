@@ -1,20 +1,23 @@
+# Example class with normal fn definitions
 class Inst
   attr_writer :person
 
   def test_priv(greet)
-    priv "#{greet}"
+    priv greet
   end
 
   def test_share(greet, inst)
     inst.share greet
   end
 
-private
+  private
+
   def priv(greet)
     puts "#{greet} #{@person}"
   end
 
-protected
+  protected
+
   def share(greet)
     puts "#{greet} #{@person}"
   end

@@ -1,12 +1,14 @@
+# Example singleton class with normal fn definitions
 module Sing
   extend self
   attr_writer :person
 
   def test_priv(greet)
-    priv "#{greet}"
+    priv greet
   end
 
-private
+  private
+
   def priv(greet)
     puts "#{greet} #{@person}"
   end

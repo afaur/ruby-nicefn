@@ -1,3 +1,4 @@
+# Namespace that ::Inst and ::Sing are added to
 module Nicefn
 end
 
