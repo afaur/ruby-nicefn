@@ -144,10 +144,10 @@ indicating how you would like to fetch the `gem` to your `Gemfile`:
 gem 'nicefn'
 
 # Download nicefn from default source with version constraints
-gem 'nicefn', '~> 0.1.0'
+gem 'nicefn', '~> 0.1.1'
 
 # Download nicefn from git with a specific version
-gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', tag: 'v0.1.0'
+gem 'nicefn', git: 'https://github.com/afaur/ruby-nicefn', tag: 'v0.1.1'
 ...
 ```
 
