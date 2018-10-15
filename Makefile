@@ -1,5 +1,5 @@
 GEM ?= nicefn
-TAG ?= 0.1.0
+TAG ?= 0.1.1
 
 default: test_examples
 

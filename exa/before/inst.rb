@@ -2,6 +2,14 @@
 class Inst
   attr_writer :person
 
+  def self.set_klass_property(value)
+    @@klass_property = value
+  end
+
+  def self.print_klass_property()
+    puts @@klass_property
+  end
+
   def test_priv(greet)
     priv greet
   end
