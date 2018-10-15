@@ -2,6 +2,8 @@
 module Nicefn
   # Adds one-liner instance method/fn declaration capabilities for classes
   module Inst
+    define_method(:cm) { |func, &blk| define_singleton_method(func, &blk) }
+
     define_method(:fn) { |func, &blk| define_method(func, &blk) }
 
     define_method(:fp) do |func, &blk|

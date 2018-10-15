@@ -40,6 +40,14 @@ Provided below is an example class with `public`, `private`, and `protected` met
 class Inst
   attr_writer :person
 
+  def self.set_klass_property(value)
+    @@klass_property = value
+  end
+
+  def self.print_klass_property()
+    puts @@klass_property
+  end
+
   def test_priv(greet)
     priv greet
   end
@@ -61,10 +69,10 @@ class Inst
   end
 end
 ```
-If we use `nicefn` on this class we can eliminate 12 lines of code (if we add
-spaces around private and protected like rubocop suggests) inside of the class
-definition. This is because `private` and `protected` are handled by different
-functions (like `defp` in `elixir`).
+If we use `nicefn` on this class we can eliminate more than 12 lines of code (if
+we add spaces around private and protected like rubocop suggests) inside of the
+class definition. This is because `private` and `protected` are handled by
+different functions (like `defp` in `elixir`).
 
 ### After Adding Nicefn::Inst
 ```rb
@@ -73,6 +81,9 @@ require 'nicefn'
 class Inst
   extend Nicefn::Inst
   attr_writer :person
+
+  cm(:set_klass_property)   { |value| @@klass_property = value }
+  cm(:print_klass_property) { puts @@klass_property }
 
   fn(:test_priv)  { |greet| priv greet }
   fn(:test_share) { |greet, inst| inst.share greet }
@@ -83,6 +94,7 @@ class Inst
 end
 ```
 Calling `fn` with a function `name` and a block will give you a public method.
+(**Since version 0.1.1**) Class methods are created using the `cm` function.
 If you call `fp` you will get a `private` method, and `fs` will set a
 `protected` (shared) method.
 

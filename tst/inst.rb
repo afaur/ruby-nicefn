@@ -1,14 +1,23 @@
 # Tests check examples before `Nicefn::Inst` is added and after.
 class TestInstance < Test::Unit::TestCase
   def setup
+    @klass_property = 'test'
     @person_one = 'John'
     @person_two = 'Jack'
-    @expected_stdout = "hello #{@person_one}\nhello #{@person_two}\n"
+    @expected_stdout = [
+      'test', "hello #{@person_one}", "hello #{@person_two}\n"
+    ].join("\n")
   end
 
   # Make sure all instance methods work and output correctly
   def test_inst_valid
     assert_block('Error testing instance public methods') do
+      # Store a class property on Inst
+      Inst.set_klass_property @klass_property
+      
+      # Output to stdout the class property value
+      Inst.print_klass_property
+
       # Create two new instances of Inst class
       inst_one = Inst.new
       inst_two = Inst.new

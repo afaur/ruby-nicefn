@@ -5,6 +5,9 @@ class Inst
   extend Nicefn::Inst
   attr_writer :person
 
+  cm(:set_klass_property) { |value| @@klass_property = value }
+  cm(:print_klass_property) { puts @@klass_property }
+
   fn(:test_priv)  { |greet| priv greet }
   fn(:test_share) { |greet, inst| inst.share greet }
 
